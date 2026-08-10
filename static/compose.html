@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose Email - Smart Email Automation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "border-subtle": "#e2e8f0",
+                        "surface-container-high": "#e6e8ea",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "surface-tint": "#005ac2",
+                        "outline-variant": "#c2c6d6",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary-container": "#fefcff",
+                        "primary-container": "#2170e4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#424754",
+                        "sidebar-text": "#f1f5f9",
+                        "secondary": "#545f73",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "text-primary": "#0f172a",
+                        "primary": "#0058be",
+                        "surface": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "outline": "#727785",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "text-secondary": "#64748b",
+                        "on-secondary-container": "#586377",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary-container": "#b75b00"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "sidebar-width": "240px",
+                        "container-padding": "32px"
+                    },
+                    fontFamily: {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "sidebar-nav": ["Inter"]
+                    },
+                    fontSize: {
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "sidebar-nav": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Hanken Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background m-0 flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-[240px] bg-inverse-surface text-sidebar-text flex flex-col h-full shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-sidebar-text/10">
+            <span class="material-symbols-outlined text-primary-container mr-2">mail</span>
+            <span class="font-headline-md text-lg font-bold">SmartEmail</span>
+        </div>
+        <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+            <a href="index.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav">
+                <span class="material-symbols-outlined mr-3 text-xl">dashboard</span>
+                Dashboard
+            </a>
+            <a href="compose.html" class="flex items-center px-3 py-2 rounded-md bg-primary text-on-primary font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">edit_note</span>
+                Compose Email
+            </a>
+            <a href="recipients.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">group</span>
+                Recipients
+            </a>
+            <a href="schedule.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">schedule</span>
+                Schedule
+            </a>
+            <a href="logs.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">history</span>
+                Logs
+            </a>
+            <a href="settings.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">settings</span>
+                Settings
+            </a>
+        </nav>
+        <div class="p-4 border-t border-sidebar-text/10">
+            <a href="compose.html" class="flex items-center justify-center w-full py-2 bg-primary hover:bg-primary/90 text-on-primary rounded-md transition-colors font-sidebar-nav">
+                <span class="material-symbols-outlined mr-2 text-xl">add</span>
+                New Campaign
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 h-full relative">
+        <!-- Header -->
+        <header class="h-16 bg-surface-container-lowest border-b border-border-subtle flex items-center px-gutter shrink-0">
+            <h1 class="font-headline-md text-text-primary">Compose Email</h1>
+        </header>
+
+        <!-- Scrollable content -->
+        <div class="flex-1 overflow-y-auto p-container-padding">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-surface-container-lowest border border-border-subtle rounded-xl shadow-sm p-6">
+                    <form id="compose-form" class="space-y-6">
+                        
+                        <!-- From Email -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">From</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary">mail</span>
+                                <input type="text" id="from-email" readonly class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-border-subtle rounded-md text-body-md text-text-primary focus:outline-none cursor-not-allowed">
+                            </div>
+                        </div>
+
+                        <!-- Recipients -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">Recipients (Excel file)</label>
+                            <div class="flex items-center space-x-4">
+                                <button type="button" id="upload-btn" class="flex items-center px-4 py-2 border border-border-subtle rounded-md text-body-md font-medium text-text-primary hover:bg-surface-container transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-lg">upload_file</span>
+                                    Upload Excel
+                                </button>
+                                <input type="file" id="excel-file" accept=".xlsx, .xls, .csv" class="hidden">
+                                <span id="recipient-count" class="text-body-md text-text-secondary italic">0 recipients loaded</span>
+                            </div>
+                        </div>
+
+                        <!-- Template Selection -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">Template</label>
+                            <select id="template-select" class="w-full px-3 py-2 border border-border-subtle rounded-md text-body-md text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-surface-container-lowest">
+                                <option value="scratch">Start from scratch</option>
+                                <option value="welcome">Welcome Series</option>
+                                <option value="newsletter">Monthly Newsletter</option>
+                                <option value="promo">Special Promotion</option>
+                            </select>
+                        </div>
+
+                        <!-- Subject -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">Subject</label>
+                            <input type="text" id="subject" name="subject" class="w-full px-3 py-2 border border-border-subtle rounded-md text-body-md text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Enter email subject">
+                        </div>
+
+                        <!-- Message Body -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">Message Body</label>
+                            <textarea id="body" name="body" class="w-full px-3 py-2 border border-border-subtle rounded-md text-body-md text-text-primary focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary min-h-[200px]" placeholder="Hello {name},\n\nWrite your email here..."></textarea>
+                            <p class="text-xs text-text-secondary mt-1">Use {name} to personalize with recipient names.</p>
+                        </div>
+
+                        <!-- Attachment -->
+                        <div>
+                            <label class="block text-label-md text-text-secondary mb-1">Attachment (Optional)</label>
+                            <div class="flex items-center space-x-2">
+                                <label class="flex items-center cursor-pointer px-3 py-2 border border-border-subtle rounded-md text-body-md text-text-primary hover:bg-surface-container transition-colors">
+                                    <span class="material-symbols-outlined mr-2 text-lg">attachment</span>
+                                    <span>Choose File</span>
+                                    <input type="file" id="attachment" name="attachment" class="hidden">
+                                </label>
+                                <span id="attachment-name" class="text-body-md text-text-secondary">No file selected</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center justify-end space-x-4 pt-4 border-t border-border-subtle">
+                            <button type="button" id="preview-btn" class="px-4 py-2 text-primary font-medium hover:bg-primary/5 rounded-md transition-colors">
+                                Preview
+                            </button>
+                            <button type="submit" id="send-btn" class="flex items-center px-6 py-2 bg-primary hover:bg-primary/90 text-on-primary font-medium rounded-md transition-colors shadow-sm">
+                                <span class="material-symbols-outlined mr-2 text-lg">send</span>
+                                Send Email
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="absolute inset-0 bg-background/80 backdrop-blur-sm hidden flex-col items-center justify-center z-50">
+            <div class="w-12 h-12 border-4 border-border-subtle border-t-primary rounded-full animate-spin"></div>
+            <p class="mt-4 text-body-lg font-medium text-text-primary">Sending Emails...</p>
+        </div>
+
+        <!-- Result Modal -->
+        <div id="result-modal" class="absolute inset-0 bg-on-background/50 backdrop-blur-sm hidden flex items-center justify-center z-50">
+            <div class="bg-surface-container-lowest p-8 rounded-xl shadow-lg max-w-md w-full mx-4">
+                <div class="text-center mb-6">
+                    <span class="material-symbols-outlined text-5xl text-[#10b981] mb-2">check_circle</span>
+                    <h2 class="font-headline-md text-text-primary">Campaign Finished</h2>
+                </div>
+                <div class="flex justify-between items-center bg-surface-container-low p-4 rounded-lg mb-6">
+                    <div class="text-center">
+                        <p class="text-label-md text-text-secondary uppercase">Sent</p>
+                        <p class="text-2xl font-bold text-[#10b981]" id="modal-sent">0</p>
+                    </div>
+                    <div class="w-px h-10 bg-border-subtle"></div>
+                    <div class="text-center">
+                        <p class="text-label-md text-text-secondary uppercase">Failed</p>
+                        <p class="text-2xl font-bold text-error" id="modal-failed">0</p>
+                    </div>
+                </div>
+                <button type="button" id="close-modal-btn" class="w-full py-2 bg-surface-container hover:bg-surface-variant text-text-primary font-medium rounded-md transition-colors border border-border-subtle">
+                    Close
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchSettings();
+            setupTemplateListeners();
+            setupFileListeners();
+            setupFormSubmission();
+        });
+
+        async function fetchSettings() {
+            const fromEmailInput = document.getElementById('from-email');
+            try {
+                const response = await fetch('/api/settings');
+                if (!response.ok) throw new Error('Failed to fetch settings');
+                const data = await response.json();
+                
+                if (data.email) {
+                    fromEmailInput.value = data.email;
+                } else {
+                    fromEmailInput.value = 'Not configured — go to Settings';
+                }
+            } catch (error) {
+                console.error('Error fetching settings:', error);
+                fromEmailInput.value = 'Not configured — go to Settings';
+            }
+        }
+
+        function setupTemplateListeners() {
+            const templates = {
+                welcome: {
+                    subject: "Welcome to Our Community!",
+                    body: "Hello {name},\n\nWelcome aboard! We're thrilled to have you join us...\n\nBest regards,\nThe Team"
+                },
+                newsletter: {
+                    subject: "Monthly Newsletter - What's New",
+                    body: "Hello {name},\n\nHere's what happened this month...\n\nStay tuned,\nThe Team"
+                },
+                promo: {
+                    subject: "Special Offer Just for You!",
+                    body: "Hello {name},\n\nWe have an exclusive deal waiting for you...\n\nCheers,\nThe Team"
+                }
+            };
+
+            const select = document.getElementById('template-select');
+            const subjectInput = document.getElementById('subject');
+            const bodyInput = document.getElementById('body');
+
+            select.addEventListener('change', (e) => {
+                const val = e.target.value;
+                if (templates[val]) {
+                    subjectInput.value = templates[val].subject;
+                    bodyInput.value = templates[val].body;
+                } else if (val === 'scratch') {
+                    subjectInput.value = '';
+                    bodyInput.value = '';
+                }
+            });
+
+            document.getElementById('preview-btn').addEventListener('click', () => {
+                const sub = subjectInput.value || '(No Subject)';
+                const bdy = bodyInput.value || '(No Body)';
+                alert(`Preview:\n\nSubject: ${sub}\n\n${bdy.replace('{name}', 'John Doe')}`);
+            });
+        }
+
+        function setupFileListeners() {
+            const uploadBtn = document.getElementById('upload-btn');
+            const excelFile = document.getElementById('excel-file');
+            const recipientCount = document.getElementById('recipient-count');
+            
+            uploadBtn.addEventListener('click', () => excelFile.click());
+
+            excelFile.addEventListener('change', async (e) => {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    
+                    try {
+                        recipientCount.textContent = 'Uploading...';
+                        const response = await fetch('/api/recipients/upload', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        if (!response.ok) throw new Error('Upload failed');
+                        const data = await response.json();
+                        const count = data.count || 0;
+                        recipientCount.textContent = `${count} recipients loaded`;
+                    } catch (error) {
+                        console.error('Error uploading recipients:', error);
+                        recipientCount.textContent = 'Upload failed. Try again.';
+                    }
+                }
+            });
+
+            const attachment = document.getElementById('attachment');
+            const attachmentName = document.getElementById('attachment-name');
+            attachment.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    attachmentName.textContent = e.target.files[0].name;
+                } else {
+                    attachmentName.textContent = 'No file selected';
+                }
+            });
+        }
+
+        function setupFormSubmission() {
+            const form = document.getElementById('compose-form');
+            const overlay = document.getElementById('loading-overlay');
+            const modal = document.getElementById('result-modal');
+            const closeBtn = document.getElementById('close-modal-btn');
+
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            });
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const subject = document.getElementById('subject').value;
+                const body = document.getElementById('body').value;
+                const attachmentFile = document.getElementById('attachment').files[0];
+
+                if (!subject || !body) {
+                    alert('Subject and body are required.');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('subject', subject);
+                formData.append('body', body);
+                if (attachmentFile) {
+                    formData.append('attachment', attachmentFile);
+                }
+
+                overlay.classList.remove('hidden');
+                overlay.classList.add('flex');
+
+                try {
+                    const response = await fetch('/api/send', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                    
+                    if (!response.ok) throw new Error('Send failed');
+                    
+                    const data = await response.json();
+                    
+                    document.getElementById('modal-sent').textContent = data.sent || 0;
+                    document.getElementById('modal-failed').textContent = data.failed || 0;
+                    
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                } catch (error) {
+                    console.error('Error sending email:', error);
+                    overlay.classList.add('hidden');
+                    overlay.classList.remove('flex');
+                    alert('Failed to send email. Please check your settings and try again.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

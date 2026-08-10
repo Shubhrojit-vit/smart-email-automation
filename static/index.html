@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Smart Email Automation</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "border-subtle": "#e2e8f0",
+                        "surface-container-high": "#e6e8ea",
+                        "inverse-surface": "#2d3133",
+                        "background": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "surface-tint": "#005ac2",
+                        "outline-variant": "#c2c6d6",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary-container": "#fefcff",
+                        "primary-container": "#2170e4",
+                        "surface-dim": "#d8dadc",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#424754",
+                        "sidebar-text": "#f1f5f9",
+                        "secondary": "#545f73",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#eceef0",
+                        "text-primary": "#0f172a",
+                        "primary": "#0058be",
+                        "surface": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "outline": "#727785",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "text-secondary": "#64748b",
+                        "on-secondary-container": "#586377",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary-container": "#b75b00"
+                    },
+                    spacing: {
+                        "gutter": "24px",
+                        "stack-md": "16px",
+                        "stack-sm": "8px",
+                        "sidebar-width": "240px",
+                        "container-padding": "32px"
+                    },
+                    fontFamily: {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "sidebar-nav": ["Inter"]
+                    },
+                    fontSize: {
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }],
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "sidebar-nav": ["14px", { lineHeight: "20px", fontWeight: "500" }]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Hanken Grotesk', sans-serif; }
+        .stat-card-glow-blue { background: radial-gradient(circle at 100% 100%, rgba(0, 88, 190, 0.1) 0%, transparent 70%); }
+        .stat-card-glow-green { background: radial-gradient(circle at 100% 100%, rgba(16, 185, 129, 0.1) 0%, transparent 70%); }
+        .stat-card-glow-red { background: radial-gradient(circle at 100% 100%, rgba(186, 26, 26, 0.1) 0%, transparent 70%); }
+        .stat-card-glow-orange { background: radial-gradient(circle at 100% 100%, rgba(183, 91, 0, 0.1) 0%, transparent 70%); }
+    </style>
+</head>
+<body class="bg-background text-on-background m-0 flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-[240px] bg-inverse-surface text-sidebar-text flex flex-col h-full shrink-0">
+        <div class="h-16 flex items-center px-6 border-b border-sidebar-text/10">
+            <span class="material-symbols-outlined text-primary-container mr-2">mail</span>
+            <span class="font-headline-md text-lg font-bold">SmartEmail</span>
+        </div>
+        <nav class="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+            <a href="index.html" class="flex items-center px-3 py-2 rounded-md bg-primary text-on-primary font-sidebar-nav">
+                <span class="material-symbols-outlined mr-3 text-xl">dashboard</span>
+                Dashboard
+            </a>
+            <a href="compose.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">edit_note</span>
+                Compose Email
+            </a>
+            <a href="recipients.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">group</span>
+                Recipients
+            </a>
+            <a href="schedule.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">schedule</span>
+                Schedule
+            </a>
+            <a href="logs.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">history</span>
+                Logs
+            </a>
+            <a href="settings.html" class="flex items-center px-3 py-2 rounded-md hover:bg-sidebar-text/10 transition-colors font-sidebar-nav mt-1">
+                <span class="material-symbols-outlined mr-3 text-xl">settings</span>
+                Settings
+            </a>
+        </nav>
+        <div class="p-4 border-t border-sidebar-text/10">
+            <a href="compose.html" class="flex items-center justify-center w-full py-2 bg-primary hover:bg-primary/90 text-on-primary rounded-md transition-colors font-sidebar-nav">
+                <span class="material-symbols-outlined mr-2 text-xl">add</span>
+                New Campaign
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col min-w-0 h-full">
+        <!-- Header -->
+        <header class="h-16 bg-surface-container-lowest border-b border-border-subtle flex items-center justify-between px-gutter shrink-0">
+            <h1 class="font-headline-md text-text-primary hidden sm:block">Dashboard</h1>
+            
+            <div class="flex items-center space-x-4 ml-auto">
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-text-secondary text-lg">search</span>
+                    <input type="text" placeholder="Search..." class="pl-10 pr-4 py-2 border border-border-subtle rounded-full text-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 lg:w-64">
+                </div>
+                <button class="text-text-secondary hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">help</span>
+                </button>
+                <button class="text-text-secondary hover:text-primary transition-colors relative">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-sm cursor-pointer ml-2">
+                    U
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable content -->
+        <div class="flex-1 overflow-y-auto p-container-padding">
+            <div class="max-w-6xl mx-auto space-y-gutter">
+                
+                <!-- Stat Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Total -->
+                    <div class="bg-surface-container-lowest p-6 rounded-xl border border-border-subtle shadow-sm hover:shadow-md transition-shadow relative overflow-hidden stat-card-glow-blue">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-body-md text-text-secondary font-medium">Total Emails</h3>
+                            <span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">mail</span>
+                        </div>
+                        <div class="text-3xl font-headline-lg text-text-primary" id="stat-total">-</div>
+                    </div>
+                    
+                    <!-- Sent -->
+                    <div class="bg-surface-container-lowest p-6 rounded-xl border border-border-subtle shadow-sm hover:shadow-md transition-shadow relative overflow-hidden stat-card-glow-green">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-body-md text-text-secondary font-medium">Sent</h3>
+                            <span class="material-symbols-outlined text-[#10b981] bg-[#10b981]/10 p-2 rounded-lg">send</span>
+                        </div>
+                        <div class="text-3xl font-headline-lg text-text-primary" id="stat-sent">-</div>
+                    </div>
+                    
+                    <!-- Failed -->
+                    <div class="bg-surface-container-lowest p-6 rounded-xl border border-border-subtle shadow-sm hover:shadow-md transition-shadow relative overflow-hidden stat-card-glow-red">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-body-md text-text-secondary font-medium">Failed</h3>
+                            <span class="material-symbols-outlined text-error bg-error/10 p-2 rounded-lg">error</span>
+                        </div>
+                        <div class="text-3xl font-headline-lg text-text-primary" id="stat-failed">-</div>
+                    </div>
+                    
+                    <!-- Pending -->
+                    <div class="bg-surface-container-lowest p-6 rounded-xl border border-border-subtle shadow-sm hover:shadow-md transition-shadow relative overflow-hidden stat-card-glow-orange">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-body-md text-text-secondary font-medium">Pending</h3>
+                            <span class="material-symbols-outlined text-tertiary-container bg-tertiary-container/10 p-2 rounded-lg">schedule</span>
+                        </div>
+                        <div class="text-3xl font-headline-lg text-text-primary" id="stat-pending">-</div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-surface-container-lowest rounded-xl border border-border-subtle shadow-sm overflow-hidden mt-8">
+                    <div class="px-6 py-4 border-b border-border-subtle flex justify-between items-center bg-surface-container-lowest">
+                        <h2 class="font-headline-md text-text-primary">Recent Activity</h2>
+                        <a href="logs.html" class="text-primary hover:text-primary-container text-body-md font-medium transition-colors">View All Logs</a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-surface-container-low text-text-secondary text-label-md uppercase border-b border-border-subtle">
+                                    <th class="px-6 py-3 font-semibold">Recipient</th>
+                                    <th class="px-6 py-3 font-semibold">Status</th>
+                                    <th class="px-6 py-3 font-semibold">Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activity-tbody" class="divide-y divide-border-subtle text-body-md">
+                                <tr>
+                                    <td colspan="3" class="px-6 py-8 text-center text-text-secondary italic">Loading activity...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchStats();
+            fetchLogs();
+        });
+
+        async function fetchStats() {
+            try {
+                const response = await fetch('/api/dashboard/stats');
+                if (!response.ok) throw new Error('Failed to fetch stats');
+                const data = await response.json();
+                
+                document.getElementById('stat-total').textContent = data.total ?? 0;
+                document.getElementById('stat-sent').textContent = data.sent ?? 0;
+                document.getElementById('stat-failed').textContent = data.failed ?? 0;
+                document.getElementById('stat-pending').textContent = data.pending ?? 0;
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+                document.getElementById('stat-total').textContent = '0';
+                document.getElementById('stat-sent').textContent = '0';
+                document.getElementById('stat-failed').textContent = '0';
+                document.getElementById('stat-pending').textContent = '0';
+            }
+        }
+
+        async function fetchLogs() {
+            const tbody = document.getElementById('activity-tbody');
+            try {
+                const response = await fetch('/api/logs?per_page=10');
+                if (!response.ok) throw new Error('Failed to fetch logs');
+                const data = await response.json();
+                
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="3" class="px-6 py-8 text-center text-text-secondary">No activity yet.</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = '';
+                data.forEach(log => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-surface-container-low/50 transition-colors';
+                    
+                    const initial = log.recipient ? log.recipient.charAt(0).toUpperCase() : '?';
+                    
+                    let statusHtml = '';
+                    if (log.status?.toLowerCase() === 'sent') {
+                        statusHtml = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#10b981]/10 text-[#10b981]">Sent</span>`;
+                    } else if (log.status?.toLowerCase() === 'failed') {
+                        statusHtml = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-error/10 text-error">Failed</span>`;
+                    } else {
+                        statusHtml = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-tertiary-container/10 text-tertiary-container">${log.status || 'Pending'}</span>`;
+                    }
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-8 w-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+                                    ${initial}
+                                </div>
+                                <div class="ml-3">
+                                    <p class="text-text-primary font-medium">${log.recipient}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            ${statusHtml}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-text-secondary">
+                            ${log.time || '-'}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error fetching logs:', error);
+                tbody.innerHTML = `<tr><td colspan="3" class="px-6 py-8 text-center text-error">Failed to load activity.</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>
