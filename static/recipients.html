@@ -196,12 +196,21 @@
                 if (response.ok) {
                     const data = await response.json();
                     allRecipients = data.recipients || [];
-                    if (data.fileName) {
-                        document.getElementById('statusCard').classList.remove('hidden');
-                        document.getElementById('statusCard').classList.add('flex');
-                        document.getElementById('fileNameDisplay').textContent = data.fileName;
-                        document.getElementById('recipientCountBadge').textContent = \`\${allRecipients.length} recipients found\`;
-                        document.getElementById('dataSourceInfo').textContent = \`Using data from: \${data.fileName}\`;
+                    const statusCard = document.getElementById('statusCard');
+                    const fileNameDisplay = document.getElementById('fileNameDisplay');
+                    const recipientCountBadge = document.getElementById('recipientCountBadge');
+                    const dataSourceInfo = document.getElementById('dataSourceInfo');
+
+                    if (data.fileName || allRecipients.length > 0) {
+                        statusCard.classList.remove('hidden');
+                        statusCard.classList.add('flex');
+                        fileNameDisplay.textContent = data.fileName || 'recipients.xlsx';
+                        recipientCountBadge.textContent = `${allRecipients.length} recipients loaded`;
+                        dataSourceInfo.textContent = `Using data from: ${data.fileName || 'Uploaded list'}`;
+                    } else {
+                        statusCard.classList.add('hidden');
+                        statusCard.classList.remove('flex');
+                        dataSourceInfo.textContent = 'No file uploaded yet';
                     }
                     renderTable();
                 } else {
@@ -219,26 +228,37 @@
             const formData = new FormData();
             formData.append('file', file);
 
+            const uploadBtn = event.target.parentElement.querySelector('button');
+            const originalBtnHtml = uploadBtn ? uploadBtn.innerHTML : '';
+            if (uploadBtn) {
+                uploadBtn.disabled = true;
+                uploadBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Uploading...';
+            }
+
             try {
                 const response = await fetch('/api/recipients/upload', {
                     method: 'POST',
                     body: formData
                 });
                 
-                if (response.ok) {
-                    const result = await response.json();
-                    alert('File uploaded successfully!');
+                const result = await response.json();
+                if (response.ok && result.count > 0) {
+                    alert(`Success: ${result.count} recipients uploaded from "${file.name}"!`);
                     fetchRecipients();
                 } else {
-                    alert('Error uploading file. Please try again.');
+                    const errorMsg = result.detail || result.message || 'Error processing file. Please ensure it has valid Name and Email columns.';
+                    alert(errorMsg);
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                alert('An error occurred while uploading.');
+                alert('An error occurred while uploading: ' + error.message);
+            } finally {
+                if (uploadBtn) {
+                    uploadBtn.disabled = false;
+                    uploadBtn.innerHTML = originalBtnHtml;
+                }
+                event.target.value = '';
             }
-            
-            // Reset input so the same file can be uploaded again if needed
-            event.target.value = '';
         }
 
         function filterTable() {

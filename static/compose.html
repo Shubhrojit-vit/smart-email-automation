@@ -241,10 +241,31 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetchSettings();
+            fetchRecipientCount();
             setupTemplateListeners();
             setupFileListeners();
             setupFormSubmission();
         });
+
+        async function fetchRecipientCount() {
+            const recipientCount = document.getElementById('recipient-count');
+            try {
+                const response = await fetch('/api/recipients');
+                if (response.ok) {
+                    const data = await response.json();
+                    const count = data.total ?? (data.recipients ? data.recipients.length : 0);
+                    if (data.fileName && count > 0) {
+                        recipientCount.textContent = `${count} recipients loaded (${data.fileName})`;
+                    } else if (count > 0) {
+                        recipientCount.textContent = `${count} recipients loaded`;
+                    } else {
+                        recipientCount.textContent = '0 recipients loaded';
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching recipient count:', error);
+            }
+        }
 
         async function fetchSettings() {
             const fromEmailInput = document.getElementById('from-email');
@@ -321,13 +342,23 @@
                             method: 'POST',
                             body: formData
                         });
-                        if (!response.ok) throw new Error('Upload failed');
                         const data = await response.json();
-                        const count = data.count || 0;
-                        recipientCount.textContent = `${count} recipients loaded`;
+                        if (response.ok && data.count > 0) {
+                            recipientCount.textContent = `${data.count} recipients loaded (${file.name})`;
+                            recipientCount.classList.remove('text-red-500');
+                        } else {
+                            const errMsg = data.detail || data.message || 'Upload failed. Please check column names.';
+                            recipientCount.textContent = errMsg;
+                            recipientCount.classList.add('text-red-500');
+                            alert(errMsg);
+                        }
                     } catch (error) {
                         console.error('Error uploading recipients:', error);
                         recipientCount.textContent = 'Upload failed. Try again.';
+                        recipientCount.classList.add('text-red-500');
+                        alert('Upload failed: ' + error.message);
+                    } finally {
+                        excelFile.value = '';
                     }
                 }
             });

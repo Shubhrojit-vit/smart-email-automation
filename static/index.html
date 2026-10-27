@@ -250,18 +250,20 @@
                 const response = await fetch('/api/logs?per_page=10');
                 if (!response.ok) throw new Error('Failed to fetch logs');
                 const data = await response.json();
+                const logs = data.logs || (Array.isArray(data) ? data : []);
                 
-                if (!data || data.length === 0) {
+                if (!logs || logs.length === 0) {
                     tbody.innerHTML = `<tr><td colspan="3" class="px-6 py-8 text-center text-text-secondary">No activity yet.</td></tr>`;
                     return;
                 }
 
                 tbody.innerHTML = '';
-                data.forEach(log => {
+                logs.forEach(log => {
                     const row = document.createElement('tr');
                     row.className = 'hover:bg-surface-container-low/50 transition-colors';
                     
-                    const initial = log.recipient ? log.recipient.charAt(0).toUpperCase() : '?';
+                    const displayName = log.name || log.email || 'Recipient';
+                    const initial = displayName.charAt(0).toUpperCase();
                     
                     let statusHtml = '';
                     if (log.status?.toLowerCase() === 'sent') {
@@ -279,7 +281,8 @@
                                     ${initial}
                                 </div>
                                 <div class="ml-3">
-                                    <p class="text-text-primary font-medium">${log.recipient}</p>
+                                    <p class="text-text-primary font-medium">${displayName}</p>
+                                    <p class="text-text-secondary text-xs">${log.email || ''}</p>
                                 </div>
                             </div>
                         </td>

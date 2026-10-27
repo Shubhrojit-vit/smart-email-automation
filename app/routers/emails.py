@@ -146,6 +146,7 @@ def get_stats():
     db.close()
     
     return {
+        "total": total_emails,
         "total_emails": total_emails,
         "sent": sent,
         "failed": failed,

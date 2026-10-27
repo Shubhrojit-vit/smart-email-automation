@@ -34,6 +34,14 @@ def init_db():
                 subject TEXT
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS upload_metadata (
+                id INTEGER PRIMARY KEY,
+                filename TEXT,
+                uploaded_at TEXT,
+                total_recipients INTEGER
+            )
+        ''')
         conn.commit()
 
 def get_db():
